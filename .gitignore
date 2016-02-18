@@ -9,6 +9,7 @@
 *.swo
 *.swp
 *.tgz
+*.pyc
 *.xml
 .DS_Store
 .idea

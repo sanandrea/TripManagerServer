@@ -1,9 +1,11 @@
 {
   "name": "ttserver",
   "version": "1.0.0",
+  "description": "Trip Server",
   "main": "server/server.js",
   "scripts": {
-    "pretest": "jshint ."
+    "pretest": "jshint .",
+    "test": "cd tests;./run_tests.sh 0"
   },
   "dependencies": {
     "compression": "^1.0.3",
@@ -20,8 +22,8 @@
     "jshint": "^2.5.6"
   },
   "repository": {
-    "type": "",
-    "url": ""
+    "type": "git",
+    "url": "https://bitbucket.org/sanandrea/toptalserver"
   },
-  "description": "ttserver"
+  "private": true
 }
