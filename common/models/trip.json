@@ -1,0 +1,29 @@
+{
+  "name": "Trip",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "destination": {
+      "type": "string",
+      "required": true
+    },
+    "startdate": {
+      "type": "date",
+      "required": true
+    },
+    "enddate": {
+      "type": "date",
+      "required": true
+    },
+    "comment": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
