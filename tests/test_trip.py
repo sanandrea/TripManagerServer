@@ -10,7 +10,7 @@ PASSWORD = "test"
 BASE_URL = TF.HOST + "/api/v1"
 TRIP_URL = BASE_URL + "/Trips"
 
-token = "aQVVwuBq4FaLdZO3sJhgfJprzBnrv5XAaAckMifYf5nXiLdWvg3xfpN64wDsH17D"
+token = "hnT0mEjoUFSTCEjzp2ReulVDCY1ADdzNr4AuYRiTtx3tc4wvCEtNMc0CzQNjQzdO"
 
 @makeTest
 def testCreateTrip():
@@ -19,6 +19,7 @@ def testCreateTrip():
 	ed = datetime.datetime.now().isoformat()
 	headers = TF.HEADERS
 	headers['Authorization'] = token
+	print headers
 	trip_data = {
 		"destination" : dest,
 		"startdate" : sd,

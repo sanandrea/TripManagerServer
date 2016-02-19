@@ -27,15 +27,15 @@
     "customer": {
       "type": "belongsTo",
       "model": "Customer",
-      "foreignKey": ""
+      "foreignKey": "customerId"
     }
   },
   "acls": [
     {
       "accessType": "*",
       "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "DENY"
+      "principalId": "$owner",
+      "permission": "ALLOW"
     }
   ],
   "methods": {}

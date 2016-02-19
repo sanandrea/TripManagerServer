@@ -11,7 +11,7 @@
     "trips": {
       "type": "hasMany",
       "model": "Trip",
-      "foreignKey": "tripId"
+      "foreignKey": "customerId"
     }
   },
   "acls": [
