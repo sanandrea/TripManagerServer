@@ -7,7 +7,20 @@
   },
   "properties": {},
   "validations": [],
-  "relations": {},
-  "acls": [],
+  "relations": {
+    "trips": {
+      "type": "hasMany",
+      "model": "Trip",
+      "foreignKey": "tripId"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
   "methods": {}
 }
