@@ -10,6 +10,8 @@ BASE_URL = TF.HOST + "/api/v1"
 REGISTER_URL = BASE_URL + "/Customers"
 LOGIN_URL = BASE_URL + "/Customers/login"
 
+TOKEN = ''
+
 @makeTest
 def testRegister():
     username = TF.titleGenerator(5,string.ascii_lowercase)
@@ -38,13 +40,13 @@ def testRegister():
 
 @makeTest
 def testLogin():
-  loginUser()
+  TOKEN = loginUser()
 
 
 def loginUser():
     try:
         login_info = {
-            'username' : 'zirvt',
+            'username' : 'ohyax',
             'password' : PASSWORD
         }
         q = requests.post(LOGIN_URL,data = login_info)
@@ -65,6 +67,27 @@ def loginUser():
         print "Ooops server not available!"
         exit(100)
 
+
+@makeTest
+def testLogout():
+  logoutUser()
+
+def logoutUser():
+    try:
+        headers = TF.HEADERS
+        headers['Authorization'] = TOKEN
+
+        q = requests.post(LOGIN_URL,headers = headers)
+        
+        if q.status_code != 200:
+            raise Exception('Wrong status code')
+
+    except requests.exceptions.ConnectionError:
+        print "Ooops server not available!"
+        exit(100)
+
+
 if __name__ == "__main__":
     testRegister()
     testLogin()
+    testLogout()

@@ -10,7 +10,7 @@ PASSWORD = "test"
 BASE_URL = TF.HOST + "/api/v1"
 TRIP_URL = BASE_URL + "/Trips"
 
-token = "hnT0mEjoUFSTCEjzp2ReulVDCY1ADdzNr4AuYRiTtx3tc4wvCEtNMc0CzQNjQzdO"
+token = "Kq2xQistTg0BYGsyIwjMrf8Li40LNEzPD6Gx0rmfvwYAvXBg3pousj0J0hByOust"
 
 @makeTest
 def testCreateTrip():

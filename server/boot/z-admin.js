@@ -7,6 +7,7 @@ module.exports = function(app) {
   var Role = app.models.Role;
   var RoleMapping = app.models.RoleMapping;
 
+  //only the first time it runs
   Customer.find({},function(err, customers){
     if(err) return console.log(err);
     if (customers.length > 0) return;
@@ -18,7 +19,7 @@ module.exports = function(app) {
           name: 'admin'
         }, function(err, role) {
           if (err) throw err;
-          console.log("created role ", role);
+          console.log('created role ', role);
 
           // Make customer an admin
           role.principals.create({
