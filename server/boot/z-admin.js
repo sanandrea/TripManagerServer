@@ -12,9 +12,8 @@ module.exports = function(app) {
     if(err) return console.log(err);
     if (customers.length > 0) return;
     Customer.create({username: 'admin', password: 'admin'},
-      function(err, instance, created) {
+      function(err, instance) {
         if (err) return console.log(err);
-        if(!created) return;
         Role.upsert({
           name: 'admin'
         }, function(err, role) {

@@ -9,7 +9,7 @@ PASSWORD = "test"
 BASE_URL = TF.HOST + "/api/v1"
 REGISTER_URL = BASE_URL + "/Customers"
 LOGIN_URL = BASE_URL + "/Customers/login"
-
+LOGOUT_URL = BASE_URL + "/Customers/logout"
 TOKEN = ''
 
 @makeTest
@@ -40,13 +40,14 @@ def testRegister():
 
 @makeTest
 def testLogin():
+  global TOKEN
   TOKEN = loginUser()
 
 
 def loginUser():
     try:
         login_info = {
-            'username' : 'ohyax',
+            'username' : 'giasv',
             'password' : PASSWORD
         }
         q = requests.post(LOGIN_URL,data = login_info)
@@ -60,7 +61,6 @@ def loginUser():
             raise Exception('No userId returned')
         if (result['id'] == None):
             raise Exception('No cookie returned')
-
         return result['id']
 
     except requests.exceptions.ConnectionError:
@@ -74,13 +74,16 @@ def testLogout():
 
 def logoutUser():
     try:
+        print TOKEN
+        login_info = {
+            'username' : 'giasv'
+        }
         headers = TF.HEADERS
         headers['Authorization'] = TOKEN
 
-        q = requests.post(LOGIN_URL,headers = headers)
-        
-        if q.status_code != 200:
-            raise Exception('Wrong status code')
+        q = requests.post(LOGOUT_URL, headers = headers)
+        if q.status_code != 204:
+            raise Exception('Wrong status code', q.text)
 
     except requests.exceptions.ConnectionError:
         print "Ooops server not available!"

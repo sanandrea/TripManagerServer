@@ -27,7 +27,7 @@
     "customer": {
       "type": "belongsTo",
       "model": "Customer",
-      "foreignKey": "customerId"
+      "foreignKey": ""
     }
   },
   "acls": [
