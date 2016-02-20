@@ -26,8 +26,8 @@ def getAdminUser():
         return None
     cDict = db['models']['Customer']
     for i in range(0, len(cDict)):
-        if str(i) in cDict:
-            customer = sjson.loads(cDict[str(i)])
+        if str(i + 1) in cDict:
+            customer = sjson.loads(cDict[str(i+1)])
             if customer['username'] == 'admin':
                 return customer
 

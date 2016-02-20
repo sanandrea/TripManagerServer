@@ -54,7 +54,7 @@ def loginUser(user):
         q = requests.post(LOGIN_URL,data = login_info)
         
         if q.status_code != 200:
-            raise Exception('Wrong status code')
+            raise Exception('Wrong status code ', q.status_code, q.text)
         
         result = q.json()
 

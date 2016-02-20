@@ -11,7 +11,7 @@ module.exports = function(app) {
   Customer.find({},function(err, customers){
     if(err) return console.log(err);
     if (customers.length > 0) return;
-    Customer.create({username: 'admin', password: 'admin'},
+    Customer.create({username: 'admin', password: 'test'},
       function(err, instance) {
         if (err) return console.log(err);
         Role.upsert({
@@ -28,6 +28,9 @@ module.exports = function(app) {
             if (err) throw err;
             console.log(principal);
           });
+        });
+        Role.upsert({name:'manager'}, function(err, role){
+          if (err) throw err;
         });
       });
   });

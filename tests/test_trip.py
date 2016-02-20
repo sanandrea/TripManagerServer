@@ -11,7 +11,7 @@ import test_user as TU
 PASSWORD = "test"
 BASE_URL = TF.HOST + "/api/v1"
 TRIP_URL = BASE_URL + "/Trips"
-TRIP_LIST_URL = TRIP_URL + "/list-trips"
+USER_URL = BASE_URL + "/Customers"
 
 def getAToken():
 	auth = DB.getLoginToken()
@@ -106,10 +106,10 @@ def testDeleteTripFromOther(token, tripId):
 
 
 @makeTest
-def testGetTripList():
-	auth = getAToken()
+def testGetTripList(uid,token):
 	headers = TF.HEADERS
-	r = requests.get(TRIP_LIST_URL, headers= headers)
+	headers['Authorization'] = token
+	r = requests.get(USER_URL + "/" + str(uid) + "/trips", headers= headers)
 
 	if (r.status_code != 200):
 		raise Exception('Could not get trip list',r.text)
@@ -131,18 +131,22 @@ if __name__ == "__main__":
 	user2 = DB.getNormalUser()
 	
 
-	if user1['id'] != user2['id']:
-		token2 = DB.getTokenforUserId(user2['id'])
-		if token2 == None:
-			token2 = TU.loginUser(user2['username'])
-		tid = testCreateTrip(token1)
-		testReadTripFromOther(token2,tid)
-		testUpdateTripFromOther(token2,tid)
-		testDeleteTripFromOther(token2, tid)
+	while (user1['id'] == user2['id']):
+		TU.testRegister()
+		user2 = DB.getNormalUser()
+
+	
+	token2 = DB.getTokenforUserId(user2['id'])
+	if token2 == None:
+		token2 = TU.loginUser(user2['username'])
+	tid = testCreateTrip(token1)
+	testReadTripFromOther(token2,tid)
+	testUpdateTripFromOther(token2,tid)
+	testDeleteTripFromOther(token2, tid)
 
 	
 
-	#testGetTripList()
+	testGetTripList(user1['id'], token1)
 
 
 

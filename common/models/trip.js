@@ -15,9 +15,9 @@ module.exports = function(Trip) {
           console.log(err);
           next();
         }
-        console.log(customer);
+        //console.log(customer);
         ctx.instance.customer(customer);
-        console.log(ctx.instance);
+        //console.log(ctx.instance);
         next();
       });
     }else{
