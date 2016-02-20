@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+import re
 import string
 import random
 import sys
@@ -13,14 +14,14 @@ HOST_LOCAL = 'http://127.0.0.1:3000'
 debug = os.environ['DEBUG']
 
 if debug == "1":
-	DEBUG = True
-	HOST = HOST_LOCAL
+    DEBUG = True
+    HOST = HOST_LOCAL
 else:
-	DEBUG = False
-	HOST = HOST_REMOTE
+    DEBUG = False
+    HOST = HOST_REMOTE
 
 HEADERS = {
-	'Content-Type' : 'application/json'
+    'Content-Type' : 'application/json'
 }
 
 
@@ -38,20 +39,24 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 def titleGenerator(size=6, chars=string.ascii_uppercase):
-	return ''.join(random.choice(chars) for _ in range(size))
+    return ''.join(random.choice(chars) for _ in range(size))
 
-def makeTest(fn):
-	def wrapped():
-		print "\n=== Begin " + fn.__name__ + " test ==="
-		try:
-			fn()
-			print "*** Passed " + fn.__name__ + " test ***"
-			#sys.exit(0)
-		except Exception as e:
-			print 'Test ' + fn.__name__ + bcolors.FAIL + bcolors.BOLD + " NOT PASSED! " + bcolors.ENDC + str(e) #+ sys.exc_info()[-1].print_stack()
-			sys.exit(100)
+def camel_case_split(identifier):
+    return re.sub("([a-z])([A-Z])","\g<1> \g<2>",identifier)
 
-	return wrapped
+def makeTest(fn, *args, **kwargs):
+    def wrapped(*args, **kwargs):
+        print "\n=== Begin " + camel_case_split(fn.__name__) + " ==="
+        try:
+            result = fn(*args, **kwargs)
+            print "*** Passed " + camel_case_split(fn.__name__) + " ***"
+            return result
+
+        except Exception as e:
+            print 'Test ' + fn.__name__ + bcolors.FAIL + bcolors.BOLD + " NOT PASSED! " + bcolors.ENDC + str(e) #+ sys.exc_info()[-1].print_stack()
+            sys.exit(100)
+
+    return wrapped
 
 
 

@@ -1,5 +1,6 @@
 import test_frame as TF
 from test_frame import makeTest
+import db_manager as DB
 import requests
 import string
 import json
@@ -41,13 +42,13 @@ def testRegister():
 @makeTest
 def testLogin():
   global TOKEN
-  TOKEN = loginUser()
+  TOKEN = loginUser(DB.getNormalUser()['username'])
 
 
-def loginUser():
+def loginUser(user):
     try:
         login_info = {
-            'username' : 'giasv',
+            'username' : user,
             'password' : PASSWORD
         }
         q = requests.post(LOGIN_URL,data = login_info)
@@ -74,10 +75,6 @@ def testLogout():
 
 def logoutUser():
     try:
-        print TOKEN
-        login_info = {
-            'username' : 'giasv'
-        }
         headers = TF.HEADERS
         headers['Authorization'] = TOKEN
 
