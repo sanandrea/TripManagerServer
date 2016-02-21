@@ -49,7 +49,7 @@ def makeTest(fn, *args, **kwargs):
         print "\n=== Begin " + camel_case_split(fn.__name__) + " ==="
         try:
             result = fn(*args, **kwargs)
-            print "*** Passed " + camel_case_split(fn.__name__) + " ***"
+            print 'Test ' + bcolors.OKBLUE + " Passed " + bcolors.ENDC
             return result
 
         except Exception as e:

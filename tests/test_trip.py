@@ -114,7 +114,6 @@ def testGetTripList(uid,token):
 	if (r.status_code != 200):
 		raise Exception('Could not get trip list',r.text)
 
-	print r.json()
 	
 if __name__ == "__main__":
 	user1 = DB.getNormalUser()
