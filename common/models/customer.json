@@ -65,6 +65,13 @@
       "principalId": "manager",
       "permission": "ALLOW",
       "property": "deleteById"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY",
+      "property": "promote"
     }
   ],
   "methods": {}
