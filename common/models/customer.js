@@ -59,4 +59,47 @@ module.exports = function(Customer) {
     http:{path:'/promote',verb:'post'},
     returns: { arg: 'result', type: String }
   });
+
+  Customer.observe('before delete', function checkIsAdmin(ctx, next) {
+    //admin can delete admin
+    //manager can delete manager
+    //manager cannot delete admin
+    var reqCtx = loopback.getCurrentContext();
+    var userId = reqCtx.get('accessToken').userId;
+    var RoleMapping = Customer.app.models.RoleMapping;
+
+    //find the Customer doing the call
+    RoleMapping.find({where: {principalId: userId}, include:'role'}, function(err, roleMap) {
+      if (err) next(err);
+      if (roleMap.length === 1) {
+        var roleMapDeleter = roleMap[0].toJSON();
+
+        //find the Customer to delete
+        RoleMapping.find({where: {principalId: ctx.where.id}, include:'role'}, function(err, roleMap) {
+          if (err) next(err);
+          if (roleMap.length === 1) {
+            var roleMapToDelete = roleMap[0].toJSON();
+            if(roleMapToDelete.role.name == 'manager'){
+              //It is a manager so proceed
+              next();
+            }else if (roleMapToDelete.role.name === roleMapDeleter.role.name){
+              //admin can delete admin
+              next();
+            }else{
+              var err = new Error("Customer has no permissions to delete this Customer");
+              err.statusCode = 403;
+              next(err);
+            }
+          }else{
+            //the Customer to delete is regular one so, PROCEED
+            next();
+          }
+        });
+      }else{
+        var err = new Error("Customer is not an Admin or Manager, cannot delete");
+        err.statusCode = 403;
+        next(err);
+      }
+    });
+  });
 };

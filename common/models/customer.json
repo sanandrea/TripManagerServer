@@ -12,6 +12,11 @@
       "type": "hasMany",
       "model": "Trip",
       "foreignKey": "customerId"
+    },
+    "roleMapping": {
+      "type": "hasOne",
+      "model": "RoleMapping",
+      "foreignKey": "principalId"
     }
   },
   "acls": [
@@ -39,6 +44,27 @@
       "principalId": "admin",
       "permission": "ALLOW",
       "property": "promote"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "manager",
+      "permission": "ALLOW",
+      "property": "create"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "manager",
+      "permission": "ALLOW",
+      "property": "find"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "manager",
+      "permission": "ALLOW",
+      "property": "deleteById"
     }
   ],
   "methods": {}
